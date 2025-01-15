@@ -1,29 +1,43 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
+app.secret_key = "supersecretkey"  # Dùng cho flash messages
 
-# Định nghĩa tên đăng nhập và mật khẩu cố định
-USERNAME = "admin"
-PASSWORD = "1234"
+# Dữ liệu người dùng tĩnh (giả lập database)
+users = {
+    "admin": "1",  # Tên đăng nhập: mật khẩu
+    "user1": "password123",
+}
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/")
+def home():
+    return render_template("login.html")  # Trả về trang login
+
+@app.route("/login", methods=["POST"])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        
-        # Kiểm tra tên đăng nhập và mật khẩu
-        if username == USERNAME and password == PASSWORD:
-            print("Oke")
-            return redirect(url_for('dashboard'))
-        else:
-            return "Tên đăng nhập hoặc mật khẩu không đúng!", 401
+    username = request.form.get("username", "").strip()
+    password = request.form.get("password", "").strip()
 
-    return render_template('login.html')
+    # Kiểm tra trường hợp trống
+    if not username:
+        flash("Username is required.", "danger")
+        return redirect(url_for("home"))
+    if not password:
+        flash("Password is required.", "danger")
+        return redirect(url_for("home"))
 
-@app.route('/dashboard', methods=['GET'])
+    # Kiểm tra thông tin đăng nhập
+    if username in users and users[username] == password:
+        # Đăng nhập thành công
+        return render_template("dashboard.html", username=username)
+
+    # Sai tên đăng nhập hoặc mật khẩu
+    flash("Invalid username or password.", "danger")
+    return redirect(url_for("home"))
+
+@app.route("/dashboard")
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template("dashboard.html")  # Trang chính sau khi đăng nhập
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
