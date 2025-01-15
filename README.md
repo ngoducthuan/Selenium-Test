@@ -66,6 +66,9 @@ Bài kiểm tra này nhằm kiểm tra chức năng đăng nhập của ứng d�
     ```bash
     pytest test_login.py
     ```
+4. Kết quả
+![image](img/image.png)
+
 
 ## 9. Tài Liệu Tham Khảo
 
