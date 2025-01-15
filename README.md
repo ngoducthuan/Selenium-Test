@@ -30,7 +30,7 @@ Bài kiểm tra này nhằm kiểm tra chức năng đăng nhập của ứng d�
 ## 4. Kết Quả Mong Đợi
 
 1. Khi nhập mật khẩu sai (`123`), ứng dụng sẽ không cho phép đăng nhập và hiển thị thông báo lỗi "Tên đăng nhập hoặc mật khẩu không đúng!".
-2. Khi nhập mật khẩu đúng (`1234`), ứng dụng sẽ chuyển hướng người dùng đến trang `dashboard`.
+2. Khi nhập mật khẩu đúng (`1`), ứng dụng sẽ chuyển hướng người dùng đến trang `dashboard`.
 
 ## 5. Kết Quả Thực Tế
 
